@@ -33,16 +33,10 @@ export class Calendar {
     async events(): Promise<DayEvent[]> {
         const body = await this.fetch();
 
-        return body.querySelectorAll("ul[class=list-unstyled] > li").map((el) => {
-            const date = { ...this.date, day: this.date.day || +this.p2e(el.querySelector("span")?.text || "").replace(/\D/g, "") };
-            const description = el.childNodes[2].text.trim();
-            const is_holiday = el.getAttribute("class")?.trim() === "eventHoliday";
-
-            return {
-                date,
-                description,
-                is_holiday,
-            };
-        });
+        return body.querySelectorAll("ul[class=list-unstyled] > li").map((el) => ({
+            date: { ...this.date, day: this.date.day || +this.p2e(el.querySelector("span")?.text || "").replace(/\D/g, "") },
+            description: el.childNodes[2].text.trim(),
+            is_holiday: el.getAttribute("class")?.trim() === "eventHoliday"
+        }));
     }
 }
