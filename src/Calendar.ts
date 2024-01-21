@@ -1,10 +1,10 @@
 import { HTMLElement, parse } from "node-html-parser";
-import { Date, Event } from "./types";
+import { CalendarDate, DayEvent } from "./types";
 
 export class Calendar {
-    private date: Date;
+    private date: CalendarDate;
 
-    constructor(date: Date) {
+    constructor(date: CalendarDate) {
         this.date = date;
     }
 
@@ -30,7 +30,7 @@ export class Calendar {
         return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
     }
 
-    async events(): Promise<Event[]> {
+    async events(): Promise<DayEvent[]> {
         const body = await this.fetch();
 
         return body.querySelectorAll("ul[class=list-unstyled] > li").map((el) => {
