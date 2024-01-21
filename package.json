@@ -1,0 +1,31 @@
+{
+    "name": "calendar-events-js",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "format": "prettier --write './**/*.{js,ts,json,yaml}'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/hidevs/calendar-events-js.git"
+    },
+    "keywords": [
+        "HiDevs",
+        "JalalLinuX"
+    ],
+    "author": "HiDevs Team",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/hidevs/calendar-events-js/issues"
+    },
+    "homepage": "https://github.com/hidevs/calendar-events-js#readme",
+    "devDependencies": {
+        "prettier": "^3.2.4",
+        "typescript": "^5.3.3"
+    },
+    "dependencies": {
+        "node-html-parser": "^6.1.12"
+    }
+}
