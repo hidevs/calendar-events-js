@@ -4,8 +4,23 @@ import { CalendarDate, DayEvent } from "./types";
 export class Calendar {
     private date: CalendarDate;
 
-    constructor(date: CalendarDate) {
-        this.date = date;
+    constructor(date: CalendarDate | string, delimiter: string = "/") {
+        this.date = this.parseDate(date, delimiter);
+    }
+
+    private parseDate(date: CalendarDate | string, delimiter: string = "/"): CalendarDate {
+        if (typeof date === "string") {
+            const split: string[] = date.split(delimiter);
+            switch (split.length) {
+                case 3:
+                    return { year: +split[0], month: +split[1], day: +split[2] };
+                case 2:
+                    return { year: +split[0], month: +split[1] };
+                default:
+                    throw new Error("The date is not in the correct format.");
+            }
+        }
+        return date;
     }
 
     private get makeUrl(): string {
@@ -14,6 +29,10 @@ export class Calendar {
 
     private async fetch(): Promise<HTMLElement> {
         return parse(await fetch(this.makeUrl).then((res) => res.text()));
+    }
+
+    private p2e(str: string): string {
+        return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
     }
 
     async isHoliday(): Promise<boolean> {
@@ -26,23 +45,13 @@ export class Calendar {
         return body.querySelectorAll("ul[class=list-unstyled] > li").some((el) => el.getAttribute("class")?.trim() === "eventHoliday");
     }
 
-    private p2e(str: string): string {
-        return str.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
-    }
-
     async events(): Promise<DayEvent[]> {
         const body = await this.fetch();
 
-        return body.querySelectorAll("ul[class=list-unstyled] > li").map((el) => {
-            const date = { ...this.date, day: this.date.day || +this.p2e(el.querySelector("span")?.text || "").replace(/\D/g, "") };
-            const description = el.childNodes[2].text.trim();
-            const is_holiday = el.getAttribute("class")?.trim() === "eventHoliday";
-
-            return {
-                date,
-                description,
-                is_holiday,
-            };
-        });
+        return body.querySelectorAll("ul[class=list-unstyled] > li").map((el) => ({
+            date: { ...this.date, day: this.date.day || +this.p2e(el.querySelector("span")?.text || "").replace(/\D/g, "") },
+            description: el.childNodes[2].text.trim(),
+            is_holiday: el.getAttribute("class")?.trim() === "eventHoliday",
+        }));
     }
 }
