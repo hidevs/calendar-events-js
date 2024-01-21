@@ -7,8 +7,7 @@ const cal = new Calendar('1402/02/02')
 const cal = new Calendar({ year: 1402, month: 2 })
 const cal = new Calendar('1402-2', '-')
 
-await cal.isHoliday(): boolean;
-await cal.events(): DayEvent[];
+await cal.events();
 
 // events() method return data
 [
@@ -118,5 +117,7 @@ await cal.events(): DayEvent[];
 
 ## Methods
 ```ts
+- isHoliday(): boolean;
 
+- events(): DayEvent[];
 ```
