@@ -9,7 +9,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hidevs/jalalli-events-js.git"
+        "url": "git+https://github.com/hidevs/jalali-events-js.git"
     },
     "keywords": [
         "HiDevs",
@@ -18,9 +18,9 @@
     "author": "HiDevs Team",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/hidevs/jalalli-events-js/issues"
+        "url": "https://github.com/hidevs/jalali-events-js/issues"
     },
-    "homepage": "https://github.com/hidevs/jalalli-events-js#readme",
+    "homepage": "https://github.com/hidevs/jalali-events-js#readme",
     "devDependencies": {
         "prettier": "^3.2.4",
         "typescript": "^5.3.3"
